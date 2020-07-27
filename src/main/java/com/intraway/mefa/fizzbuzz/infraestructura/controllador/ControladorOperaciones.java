@@ -1,34 +1,46 @@
 package com.intraway.mefa.fizzbuzz.infraestructura.controllador;
 
+import com.intraway.mefa.fizzbuzz.aplicacion.comando.ComandoOperacion;
 import com.intraway.mefa.fizzbuzz.aplicacion.manejadores.ManejadorCrearOperacion;
 import com.intraway.mefa.fizzbuzz.aplicacion.manejadores.ManejadorListarOperaciones;
-import com.intraway.mefa.fizzbuzz.infraestructura.persistencia.entidad.OperacionEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.intraway.mefa.fizzbuzz.dominio.Operacion;
+import com.intraway.mefa.fizzbuzz.dominio.exepcion.ErrorRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/operacion")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/intraway/api/fizzbuzz/")
 public class ControladorOperaciones {
     private final ManejadorCrearOperacion manejadorCrearOperacion;
     private final ManejadorListarOperaciones manejadorListarOperaciones;
 
+
     public ControladorOperaciones(ManejadorCrearOperacion manejadorCrearOperacion, ManejadorListarOperaciones manejadorListarOperaciones) {
         this.manejadorCrearOperacion = manejadorCrearOperacion;
         this.manejadorListarOperaciones = manejadorListarOperaciones;
+
     }
 
-    @GetMapping("/listar")
-    public List<OperacionEntity> listarOperaciones() {
+    @GetMapping("listar")
+    public List<Operacion> listarOperaciones() {
         return this.manejadorListarOperaciones.listarOperaciones();
     }
 
-    @GetMapping("/hola")
-    public String saludar()
-    {
-        return "Hello World!!";
 
+    @RequestMapping("/{min}/{max}")
+    public ResponseEntity<Object> registrarOperacion(@PathVariable(name = "min") int min, @PathVariable(name = "max") int max) {
+        if(max>min){
+            ComandoOperacion comandoOperacion=new ComandoOperacion(min,max);
+            return new ResponseEntity<Object>(this.manejadorCrearOperacion.registrarOperacion(comandoOperacion), HttpStatus.OK);
+        }else
+        {
+            ErrorRequest errorRequest =new ErrorRequest(min,max);
+            return new ResponseEntity<Object>(errorRequest.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
+
 }

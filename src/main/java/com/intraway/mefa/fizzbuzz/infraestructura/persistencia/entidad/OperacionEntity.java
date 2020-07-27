@@ -1,10 +1,12 @@
 package com.intraway.mefa.fizzbuzz.infraestructura.persistencia.entidad;
 
 import javax.persistence.*;
+import java.sql.Clob;
 
 
 @Entity(name = "Operacion")
 @NamedQuery(name = "Operacion.listAll", query = "SELECT operacion FROM Operacion operacion")
+@NamedQuery(name = "Operacion.findByTimestamp", query = "SELECT operacion FROM Operacion operacion WHERE operacion.timestamp = :timestamp")
 public class OperacionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,11 +15,14 @@ public class OperacionEntity {
     @Column(nullable = false)
     private Long timestamp;
     @Column(nullable = false)
-    private String code;
-    @Column(nullable = false)
     private String description;
     @Column(nullable = false)
+    @Lob
     private String list;
+    @Column(nullable = false)
+    private int min;
+    @Column(nullable = false)
+    private int max;
 
     public Long getId() {
         return id;
@@ -35,14 +40,6 @@ public class OperacionEntity {
         this.timestamp = timestamp;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -58,4 +55,22 @@ public class OperacionEntity {
     public void setList(String list) {
         this.list = list;
     }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+
 }

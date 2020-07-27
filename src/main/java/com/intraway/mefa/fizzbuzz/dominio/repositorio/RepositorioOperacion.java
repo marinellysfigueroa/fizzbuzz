@@ -6,6 +6,7 @@ import com.intraway.mefa.fizzbuzz.infraestructura.persistencia.entidad.Operacion
 import java.util.List;
 
 public interface RepositorioOperacion {
-    List<OperacionEntity> listarOperaciones();
-    void registrarOperacion(Operacion operacion);
+    OperacionEntity findByTimestamp(Long timestamp);
+    List<Operacion> listarOperaciones();
+    Operacion registrarOperacion(Operacion operacion);
 }

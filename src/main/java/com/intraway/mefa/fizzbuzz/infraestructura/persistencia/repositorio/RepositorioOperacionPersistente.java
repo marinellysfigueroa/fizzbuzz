@@ -15,17 +15,28 @@ import java.util.List;
 @Repository
 public class RepositorioOperacionPersistente implements RepositorioOperacion, RepositorioOperacionJPA {
     private static final String OPERACION_LIST_ALL = "Operacion.listAll";
+    private static final String OPERACION_FIND_TIMESTAMP = "Operacion.findByTimestamp";
+    private static final String TIMESTAMP = "timestamp";
     private EntityManager entityManager;
-
     public RepositorioOperacionPersistente(EntityManager entityManager) {
 
         this.entityManager = entityManager;
     }
 
+    @Override
+    public OperacionEntity findByTimestamp(Long timestamp) {
+        OperacionEntity operacionEntity = null;
+        Query query = entityManager.createNamedQuery(OPERACION_FIND_TIMESTAMP);
+        query.setParameter(TIMESTAMP, timestamp);
+        try
+        { operacionEntity=(OperacionEntity) query.getSingleResult();
+        }catch (Exception e) {}
+        return operacionEntity;
+    }
 
     @Override
-    public List<OperacionEntity> listarOperaciones() {
-        List<OperacionEntity> list = new ArrayList();
+    public List<Operacion> listarOperaciones() {
+        List<Operacion> list = new ArrayList();
         Query query = entityManager.createNamedQuery(OPERACION_LIST_ALL);
 
         try {
@@ -36,7 +47,9 @@ public class RepositorioOperacionPersistente implements RepositorioOperacion, Re
     }
 
     @Override
-    public void registrarOperacion(Operacion operacion) {
-        entityManager.persist(OperacionBuilder.convertirAEntity(operacion));
+    public Operacion registrarOperacion(Operacion operacion) {
+        OperacionEntity operacionEntity=OperacionBuilder.convertirAEntity(operacion);
+        entityManager.persist(operacionEntity);
+        return OperacionBuilder.convertirADominio(this.findByTimestamp(operacionEntity.getTimestamp()));
     }
 }

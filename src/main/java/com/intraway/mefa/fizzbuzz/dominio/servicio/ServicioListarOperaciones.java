@@ -1,5 +1,6 @@
 package com.intraway.mefa.fizzbuzz.dominio.servicio;
 
+import com.intraway.mefa.fizzbuzz.dominio.Operacion;
 import com.intraway.mefa.fizzbuzz.dominio.repositorio.RepositorioOperacion;
 import com.intraway.mefa.fizzbuzz.infraestructura.persistencia.entidad.OperacionEntity;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ public class ServicioListarOperaciones {
     public ServicioListarOperaciones(RepositorioOperacion repositorioOperacion) {
         this.repositorioOperacion = repositorioOperacion;
     }
-    public List<OperacionEntity> listarOperaciones(){
+    public List<Operacion> listarOperaciones(){
         return this.repositorioOperacion.listarOperaciones();
     }
 }

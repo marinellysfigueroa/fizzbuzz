@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 public class FabricaOperacion {
     public Operacion crearOperacion(ComandoOperacion comandoOperacion)
     {
-        return new Operacion(comandoOperacion.getTimestamp(),comandoOperacion.getCode(),comandoOperacion.getDescription(),comandoOperacion.getList());
+        return new Operacion(comandoOperacion.getMin(),comandoOperacion.getMax());
     }
 }

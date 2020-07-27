@@ -1,6 +1,7 @@
 package com.intraway.mefa.fizzbuzz.aplicacion.manejadores;
 
 import com.intraway.mefa.fizzbuzz.aplicacion.fabrica.FabricaOperacion;
+import com.intraway.mefa.fizzbuzz.dominio.Operacion;
 import com.intraway.mefa.fizzbuzz.dominio.servicio.ServicioListarOperaciones;
 import com.intraway.mefa.fizzbuzz.infraestructura.persistencia.entidad.OperacionEntity;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class ManejadorListarOperaciones {
         this.fabricaOperacion = fabricaOperacion;
     }
 
-    public List<OperacionEntity> listarOperaciones()
+    public List<Operacion> listarOperaciones()
     {
         return  this.servicioListarOperaciones.listarOperaciones();
     }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET})
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/intraway/api/fizzbuzz/")
 public class ControladorOperaciones {
     public static final String URL_BASE = "/intraway/api/fizzbuzz/";

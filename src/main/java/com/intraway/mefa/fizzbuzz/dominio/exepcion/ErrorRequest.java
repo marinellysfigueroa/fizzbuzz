@@ -10,13 +10,13 @@ public class ErrorRequest {
     private String message;
     private String path;
 
-    public ErrorRequest(int min, int max) {
+    public ErrorRequest(String uri) {
         this.timestamp = getTimestamp();
         this.status = 400;
         this.error = "Bad Request";
         this.exception = "com.intraway.exceptions.badrequest";
         this.message = "Los parámetros enviados son incorrectos";
-        this.path = "/intraway/api/fizzbuzz/"+min+"/"+max;
+        this.path = uri.replace("uri=","");
     }
 
     @Override
@@ -28,11 +28,15 @@ public class ErrorRequest {
                 ", \"exception\":\"" + exception + '\"' +
                 ", \"message\":\"" + message + '\"' +
                 ", \"path\":\"" + path + '\"' +
-                '}';
+                "}";
     }
     private static Long getTimestamp() {
         Date date = new Date();
         long epochTime = date.getTime();
         return epochTime;
+    }
+
+    public int getStatus() {
+        return status;
     }
 }

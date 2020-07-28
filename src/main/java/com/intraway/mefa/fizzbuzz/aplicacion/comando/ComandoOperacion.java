@@ -6,7 +6,7 @@ public class ComandoOperacion {
     private int max;
 
 
-    public ComandoOperacion(int min, int max) {
+    public ComandoOperacion(int min, int max){
 
         this.min = min;
         this.max = max;

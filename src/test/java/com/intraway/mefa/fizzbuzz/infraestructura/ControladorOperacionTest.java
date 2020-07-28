@@ -116,5 +116,6 @@ public class ControladorOperacionTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.exception").value(EXCEPTION))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(MESSAGE));
 
+
     }
 }

@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET})
 @RequestMapping("/intraway/api/fizzbuzz/")
 public class ControladorOperaciones {
+    public static final String URL_BASE = "/intraway/api/fizzbuzz/";
     private final ManejadorCrearOperacion manejadorCrearOperacion;
     private final ManejadorListarOperaciones manejadorListarOperaciones;
 
@@ -32,15 +33,18 @@ public class ControladorOperaciones {
 
 
     @RequestMapping("/{min}/{max}")
-    public ResponseEntity<Object> registrarOperacion(@PathVariable(name = "min") int min, @PathVariable(name = "max") int max) {
-        if(max>min){
+    public ResponseEntity<Object> registrarOperacion(@PathVariable(name = "min") int min, @PathVariable(name = "max") int max){
+        if(max>min)
+        {
             ComandoOperacion comandoOperacion=new ComandoOperacion(min,max);
             return new ResponseEntity<Object>(this.manejadorCrearOperacion.registrarOperacion(comandoOperacion), HttpStatus.OK);
         }else
         {
-            ErrorRequest errorRequest =new ErrorRequest(min,max);
+            ErrorRequest errorRequest =new ErrorRequest(URL_BASE +min+"/"+max);
             return new ResponseEntity<Object>(errorRequest.toString(), HttpStatus.BAD_REQUEST);
         }
+
+
     }
 
 }
